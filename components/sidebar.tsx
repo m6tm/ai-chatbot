@@ -80,19 +80,24 @@ export function Sidebar({ selectedModel = "gpt-4o" }: SidebarProps) {
       <ScrollArea className="flex-1 px-4">
         <div className="space-y-2">
           {conversations.map((conversation) => (
-            <button
+            <div
               key={conversation.id}
-              onClick={() => handleSelectConversation(conversation.id)}
               className={cn(
                 "w-full text-left px-3 py-2 rounded-md hover:bg-accent transition-colors text-sm group flex items-center justify-between",
                 currentConversation?.id === conversation.id && "bg-accent",
+                "cursor-pointer",
               )}
             >
-              <span className="truncate">{conversation.title}</span>
+              {/* Conversation title - clickable area */}
+              <span className="truncate flex-1" onClick={() => handleSelectConversation(conversation.id)}>
+                {conversation.title}
+              </span>
+
+              {/* Delete button - separate from the clickable area */}
               <Button
                 variant="ghost"
                 size="icon"
-                className="opacity-0 group-hover:opacity-100 h-6 w-6"
+                className="opacity-0 group-hover:opacity-100 h-6 w-6 flex-shrink-0 ml-2"
                 onClick={(e) => {
                   e.stopPropagation()
                   deleteConversation(conversation.id)
@@ -100,7 +105,7 @@ export function Sidebar({ selectedModel = "gpt-4o" }: SidebarProps) {
               >
                 <TrashIcon className="h-4 w-4" />
               </Button>
-            </button>
+            </div>
           ))}
         </div>
       </ScrollArea>

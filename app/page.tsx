@@ -17,6 +17,10 @@ export default function Home() {
     }
   }, [user, isLoading, router])
 
+  const handleModelChange = (modelId: string) => {
+    setSelectedModel(modelId)
+  }
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -33,7 +37,7 @@ export default function Home() {
     <div className="flex h-screen">
       <Sidebar selectedModel={selectedModel} />
       <main className="flex-1 overflow-hidden">
-        <ChatInterface />
+        <ChatInterface selectedModel={selectedModel} onModelChange={handleModelChange} />
       </main>
     </div>
   )

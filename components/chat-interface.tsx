@@ -15,11 +15,15 @@ import { FileUpload, type UploadedFile } from "@/components/file-upload"
 import { MediaGenerator } from "@/components/media-generator"
 import { SettingsPanel } from "@/components/settings-panel"
 
-export function ChatInterface() {
+type ChatInterfaceProps = {
+  selectedModel?: string
+  onModelChange?: (modelId: string) => void
+}
+
+export function ChatInterface({ selectedModel = "gpt-4o", onModelChange = () => {} }: ChatInterfaceProps) {
   const { currentConversation, createConversation, addMessageToConversation } = useConversations()
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([])
-  const [selectedModel, setSelectedModel] = useState("gpt-4o")
 
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     initialMessages:
@@ -30,6 +34,9 @@ export function ChatInterface() {
       })) || [],
     id: currentConversation?.id,
     api: "/api/chat",
+    body: {
+      model: selectedModel,
+    },
   })
 
   useEffect(() => {
@@ -127,7 +134,7 @@ export function ChatInterface() {
   }
 
   const handleModelChange = (modelId: string) => {
-    setSelectedModel(modelId)
+    onModelChange(modelId)
   }
 
   if (!currentConversation) {

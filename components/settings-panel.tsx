@@ -47,7 +47,7 @@ export function SettingsPanel({ defaultModel, onModelChange }: SettingsPanelProp
           <DialogDescription>Personnalisez votre expérience de chat IA</DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue="general">
+        <Tabs defaultValue="general" className="min-h-[300px]">
           <TabsList className="grid grid-cols-5 mb-4">
             <TabsTrigger value="general" className="flex flex-col items-center py-2 px-4">
               <Settings className="h-4 w-4 mb-1" />
